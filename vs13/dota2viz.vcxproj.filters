@@ -9,6 +9,12 @@
     <ClCompile Include="..\src\HeatmapManager.cpp">
       <Filter>Heatmap</Filter>
     </ClCompile>
+    <ClCompile Include="..\deps\heatmap\heatmap.c">
+      <Filter>Heatmap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\deps\heatmap\examples\lodepng.cpp">
+      <Filter>Heatmap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Heatmap">

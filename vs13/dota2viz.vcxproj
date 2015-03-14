@@ -79,6 +79,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\deps\heatmap\examples\lodepng.cpp" />
+    <ClCompile Include="..\deps\heatmap\heatmap.c" />
     <ClCompile Include="..\src\HeatmapManager.cpp" />
     <ClCompile Include="..\deps\Alice\example\example.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
