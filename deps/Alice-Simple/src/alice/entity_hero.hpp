@@ -70,6 +70,10 @@ namespace dota {
                 return eHero->prop<uint32_t>(".m_cellZ");
             }
 
+			VectorXYProperty getOrigin() {
+				return eHero->prop<VectorXYProperty>(".m_vecOrigin");
+			}
+
             /** Returns intelligence based on level / attributes */
             float getIntelligence() {
                 return eHero->prop<float>(".m_flIntellect");
