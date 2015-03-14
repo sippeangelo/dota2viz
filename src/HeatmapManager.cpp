@@ -49,6 +49,7 @@ void HeatmapManager::CreateImage()
 
 	// Now that we've got a finished heatmap picture, we don't need the map anymore.
 	heatmap_free(hm);
+	heatmap_free(hm2);
 
 	// Finally, we use the fantastic lodepng library to save it as an image.
 	if (unsigned error = lodepng::encode("heatmap.png", image, w, h)) {
