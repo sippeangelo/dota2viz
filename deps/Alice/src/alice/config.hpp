@@ -25,7 +25,7 @@
 
 #define DOTA_VERSION ""          // sha1 hash of repository version
 #define DOTA_PYTHON          // whether to build python binding
-#define DOTA_EXTRA   OFF         // whether to rely on addon functionallity
+#define DOTA_EXTRA   ON         // whether to rely on addon functionallity
 #define DOTA_64BIT   0          // target architecture
 #define DOTA_DEBUG   OFF               // whether to enable debugging
 #define DOTA_EMSCRIPTEN OFF // whether alice is being build for emscripten

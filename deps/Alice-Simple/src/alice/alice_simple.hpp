@@ -24,6 +24,34 @@
 #define _ALICE_SIMPLE_HPP_
 
 #include <string>
+#include <cstdio>
+
+#ifdef _MSC_VER
+#include <cstdarg>
+#define snprintf c99_snprintf
+inline int c99_vsnprintf(char* str, size_t size, const char* format, va_list ap)
+{
+	int count = -1;
+
+	if (size != 0)
+		count = _vsnprintf_s(str, size, _TRUNCATE, format, ap);
+	if (count == -1)
+		count = _vscprintf(format, ap);
+
+	return count;
+}
+inline int c99_snprintf(char* str, size_t size, const char* format, ...)
+{
+	int count;
+	va_list ap;
+
+	va_start(ap, format);
+	count = c99_vsnprintf(str, size, format, ap);
+	va_end(ap);
+
+	return count;
+}
+#endif // _MSC_VER
 
 #include <alice/config.hpp>
 #include <alice/parser.hpp>
@@ -32,7 +60,7 @@
 #include "entity_player.hpp"
 
 // Make sure we have all extra libraries available
-static_assert(DOTA_EXTRA, "Error: Addon libraries not available. Please compile Alice with BUILD_ADDONS=1.");
+//static_assert(DOTA_EXTRA, "Error: Addon libraries not available. Please compile Alice with BUILD_ADDONS=1.");
 
 namespace dota {
     /** Class providing a high-level API to entities / objects for Alice */

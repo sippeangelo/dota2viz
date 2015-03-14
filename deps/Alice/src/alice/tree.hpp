@@ -75,17 +75,17 @@ namespace dota {
             tree() : k{}, v{}, children{}, p{nullptr} {}
 
             /** Constuctor takes key and value */
-            tree(key_type k, value_type v) : k{k}, v{v}, children{}, p{nullptr} { }
+			tree(key_type k, value_type v) : k(key_type{ k }), v(Value{ v }), children{ }, p{ nullptr } { }
             
             /** Constuctor takes value */
             tree(value_type v) : k{}, v{v}, children{}, p{nullptr} { }
             
             /** Copy-Constructor */
-            tree(const tree& t) : k{t.k}, v{t.v}, children{t.children}, p{t.p} { }
+			tree(const tree& t) : k(key_type{ t.k }), v(Value{ t.v }), children(childlist_type{ t.children }), p{ t.p } { }
             
             /** Move-Constructor */
             tree (tree&& t) 
-                : k{std::move(t.k)}, v{std::move(t.v)}, children{std::move(t.children)}, p(t.p) 
+				: k(key_type{ std::move(t.k) }), v(Value{ std::move(t.v) }), children(childlist_type{ std::move(t.children) }), p(t.p)
             {
                 t.children.clear();
                 t.p = nullptr;

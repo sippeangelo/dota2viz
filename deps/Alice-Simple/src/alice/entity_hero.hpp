@@ -24,6 +24,7 @@
 #define _ALICE_ENTITY_HERO_HPP_
 
 #include <string>
+#include <cstdio>
 
 #include <alice/entity.hpp>
 #include <alice/parser.hpp>
@@ -42,7 +43,7 @@ namespace dota {
             entity_hero(const entity_hero&) = default;
 
             /** Default move constructor */
-            entity_hero(entity_hero&&) = default;
+            //entity_hero(entity_hero&&) = default;
 
             /** Default destructor */
             ~entity_hero() = default;

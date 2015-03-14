@@ -19,7 +19,7 @@ namespace dota {
             entity_game(const entity_game&) = default;
 
             /** Default move constructor */
-            entity_game(entity_game&&) = default;
+            //entity_game(entity_game&&) = default;
 
             /** Default destructor */
             ~entity_game() = default;
