@@ -1,5 +1,4 @@
 build/*
-deps/*
 doc/*
 src/alice/*.pb.*
 Doxyfile
