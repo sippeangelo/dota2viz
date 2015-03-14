@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
 	// Heatmap stuff 
 	////////////////////////////////////////////////////////////
 	HeatmapManager hmm;
-	hmm.ReadData("../src/test.csv");
+	hmm.ReadData("test.csv");
 	hmm.CreateHeatmap();
 	hmm.CreateImage();
 	////////////////////////////////////////////////////////////
