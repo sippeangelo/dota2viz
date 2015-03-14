@@ -1,0 +1,6 @@
+build/*
+deps/*
+doc/*
+src/alice/config.hpp
+src/alice/*.pb.*
+Doxyfile
