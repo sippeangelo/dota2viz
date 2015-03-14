@@ -3,5 +3,24 @@
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\deps\Alice\example\example.cpp" />
+    <ClCompile Include="..\src\ReadCSV.cpp">
+      <Filter>Heatmap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\HeatmapManager.cpp">
+      <Filter>Heatmap</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Heatmap">
+      <UniqueIdentifier>{80e585eb-380f-4be9-b67a-036856c3c509}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\ReadCSV.h">
+      <Filter>Heatmap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\HeatmapManager.h">
+      <Filter>Heatmap</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
