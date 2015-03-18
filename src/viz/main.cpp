@@ -7,8 +7,8 @@
 
 
 int main(int argc, char **argv) {
-	if (argc != 2) {
-		std::cerr << "Usage: dota2viz <path>" << std::endl;
+	if (argc < 2) {
+		std::cerr << "Usage: dota2viz <path> [team/heat (team)] [stampsize (16)] [timestep (-1)]" << std::endl;
 		return 1;
 	}
 
@@ -17,7 +17,15 @@ int main(int argc, char **argv) {
 	////////////////////////////////////////////////////////////
 	HeatmapManager hmm;
 	//hmm.ReadData();
-	hmm.CreateHeatmap(argv[1], 10000);
+	if (argc == 2) {
+		hmm.CreateHeatmap(argv[1], "heat", 16, -1);
+	} else if (argc == 3) {
+		hmm.CreateHeatmap(argv[1], argv[2], 16, -1);
+	} else if (argc == 4) {
+		hmm.CreateHeatmap(argv[1], argv[2], std::atoi(argv[3]), -1);
+	} else if (argc == 5) {
+		hmm.CreateHeatmap(argv[1], argv[2], std::atoi(argv[3]), std::atoi(argv[4]));
+	}
 	//hmm.CreateImage();
 	////////////////////////////////////////////////////////////
 	// Heatmap not stuff

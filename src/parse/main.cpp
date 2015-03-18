@@ -84,15 +84,15 @@ int parse(boost::filesystem::path filePath)
 		return 1;
 	}
 
-	boost::filesystem::create_directory("deaths");
+	boost::filesystem::create_directory(filePath.parent_path() / "deaths");
 	std::cout << "Writing " << "deaths/" + filename + ".csv" << std::endl;
-	std::ofstream f_deaths("deaths/" + filename + ".csv");
+	std::ofstream f_deaths((filePath.parent_path() / ("deaths/" + filename + ".csv")).string());
 	f_deaths.write(ss_deaths.str().c_str(), ss_deaths.str().size());
 	f_deaths.close();
 
-	boost::filesystem::create_directory("positions");
+	boost::filesystem::create_directory(filePath.parent_path() / "positions");
 	std::cout << "Writing " << "positions/" + filename + ".csv" << std::endl;
-	std::ofstream f_positions("positions/" + filename + ".csv");
+	std::ofstream f_positions((filePath.parent_path() / ("positions/" + filename + ".csv")).string());
 	f_positions.write(ss_positions.str().c_str(), ss_positions.str().size());
 	f_positions.close();
 

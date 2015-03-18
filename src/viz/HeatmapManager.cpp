@@ -26,11 +26,11 @@ heatmap_t* hm2 = heatmap_new(w, h);
 
 
 // Add the data points to the heatmap
-void HeatmapManager::CreateHeatmap(std::string path, int timestep /*= -1*/)
+void HeatmapManager::CreateHeatmap(std::string path, std::string colorscheme, int stampSize, int timestep /*= -1*/)
 {
 	//int npoints = data.size();
 
-	stamp = heatmap_stamp_gen(8);
+	stamp = heatmap_stamp_gen(stampSize);
 
 // 	std::random_device rd;
 // 		std::mt19937 prng(rd());
@@ -64,15 +64,11 @@ void HeatmapManager::CreateHeatmap(std::string path, int timestep /*= -1*/)
 	boost::filesystem::path out_red = dir;
 	boost::filesystem::path out_blue = dir;
 
-	if (timestep == -1) {
-		out_red /= "red";
-		out_blue /= "blue";
-	} else {
-		std::stringstream ss;
-		ss << timestep;
-		out_red /= "red-" + ss.str();
-		out_blue /= "blue-" + ss.str();
-	}
+
+	std::stringstream ss;
+	ss << colorscheme << "_" << stampSize << "_" << timestep;
+	out_red /= "red_" + ss.str();
+	out_blue /= "blue_" + ss.str();
 
 	boost::filesystem::create_directory(out_red);
 	boost::filesystem::create_directory(out_blue);
@@ -132,7 +128,7 @@ void HeatmapManager::CreateHeatmap(std::string path, int timestep /*= -1*/)
 
 		if (timestep > -1) {
 			if (counter % timestep == 0) {
-				CreateImage(frameIndex, out_red, out_blue);
+				CreateImage(frameIndex, colorscheme, out_red, out_blue);
 				frameIndex++;
 			}
 		}
@@ -141,7 +137,7 @@ void HeatmapManager::CreateHeatmap(std::string path, int timestep /*= -1*/)
 	}
 
 	if (timestep == -1) {
-		CreateImage(counter, out_red, out_blue);
+		CreateImage(counter, colorscheme, out_red, out_blue);
 	}
 
 	//for (boost::filesystem::directory_iterator it(dir), end; it != end; it++) {
@@ -202,15 +198,21 @@ void HeatmapManager::CreateHeatmap(std::string path, int timestep /*= -1*/)
 
 // This creates an image out of the heatmap.
 // `image` now contains the image data in 32-bit RGBA.
-void HeatmapManager::CreateImage(int counter, boost::filesystem::path out_red, boost::filesystem::path out_blue)
+void HeatmapManager::CreateImage(int counter, std::string colorscheme, boost::filesystem::path out_red, boost::filesystem::path out_blue)
 {
 	int scale2 = 10;
 	std::vector<unsigned char> image((w*scale2)*(h * scale2) * 4);
 	std::vector<unsigned char> image2((w * scale2)*(h*scale2) * 4);
 		
 	//heatmap_render_default_to(hm, &image[0]);
-	heatmap_render_to(hm, heatmap_cs_Blues_soft, &image[0]);
-	heatmap_render_to(hm2, heatmap_cs_Reds_soft, &image2[0]);
+	if (colorscheme == "team") {
+		heatmap_render_to(hm, heatmap_cs_Blues_soft, &image[0]);
+		heatmap_render_to(hm2, heatmap_cs_Reds_soft, &image2[0]);
+	} else {
+		heatmap_render_to(hm, heatmap_cs_Spectral_soft, &image[0]);
+		heatmap_render_to(hm2, heatmap_cs_Spectral_soft, &image2[0]);
+	}
+	
 
 
 
