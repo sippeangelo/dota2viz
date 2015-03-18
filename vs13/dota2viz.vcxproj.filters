@@ -21,6 +21,9 @@
     <ClCompile Include="..\deps\heatmap\colorschemes\Reds.c">
       <Filter>Heatmap</Filter>
     </ClCompile>
+    <ClCompile Include="..\deps\heatmap\colorschemes\Spectral.c">
+      <Filter>Heatmap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Heatmap">

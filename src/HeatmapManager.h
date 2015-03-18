@@ -7,15 +7,16 @@
 
 #include <heatmap.h>
 #include <examples/lodepng.h>
+#include <alice/defs.hpp>
 
 #include "ReadCSV.h"
 
 class HeatmapManager
 {
 public:
-	void ReadData(std::string path);
-	void CreateHeatmap();
-	void CreateImage();
+	void CreateHeatmap(std::string path);
+	void CreateImage(int counter);
 private:
 	std::vector<Data> data;
+	heatmap_stamp_t* stamp;
 };

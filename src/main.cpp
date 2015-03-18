@@ -16,10 +16,10 @@ int main(int argc, char **argv) {
 	////////////////////////////////////////////////////////////
 	// Heatmap stuff 
 	////////////////////////////////////////////////////////////
-	/*HeatmapManager hmm;
-	hmm.ReadData("test.csv");
-	hmm.CreateHeatmap();
-	hmm.CreateImage();*/
+	HeatmapManager hmm;
+	//hmm.ReadData();
+	hmm.CreateHeatmap("../../replays/");
+	//hmm.CreateImage();
 	////////////////////////////////////////////////////////////
 	// Heatmap not stuff
 	////////////////////////////////////////////////////////////
@@ -82,7 +82,6 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	
 
 	//std::cout << "Connected players: " << game->getConnectedPlayers() << std::endl;
 

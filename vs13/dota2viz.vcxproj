@@ -39,12 +39,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(SolutionDir)..\deps\Alice\deps\protobuf-2.5.0\lib\$(Configuration)\;$(SolutionDir)..\deps\Alice\lib\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\deps\Alice\deps\protobuf-2.5.0\lib\$(Configuration)\;$(SolutionDir)..\deps\Alice\lib\$(Configuration)\;$(BOOST_1_55_0_ROOT)\lib32-msvc-12.0;$(LibraryPath)</LibraryPath>
     <IncludePath>$(BOOST_1_55_0_ROOT);$(SolutionDir)..\deps\Alice\deps\protobuf-2.5.0\src;$(SolutionDir)..\deps\Alice\src\;$(SolutionDir)..\deps\Alice-Simple\src;$(SolutionDir)..\deps\heatmap\;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>$(SolutionDir)..\deps\Alice\deps\protobuf-2.5.0\lib\$(Configuration)\;$(SolutionDir)..\deps\Alice\lib\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)..\deps\Alice\deps\protobuf-2.5.0\lib\$(Configuration)\;$(SolutionDir)..\deps\Alice\lib\$(Configuration)\;$(BOOST_1_55_0_ROOT)\lib32-msvc-12.0;$(LibraryPath)</LibraryPath>
     <IncludePath>$(BOOST_1_55_0_ROOT);$(SolutionDir)..\deps\Alice\deps\protobuf-2.5.0\src;$(SolutionDir)..\deps\Alice\src\;$(SolutionDir)..\deps\Alice-Simple\src;$(SolutionDir)..\deps\heatmap\;$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)..\bin\$(Configuration)\</OutDir>
   </PropertyGroup>
@@ -81,6 +81,7 @@
   <ItemGroup>
     <ClCompile Include="..\deps\heatmap\colorschemes\Blues.c" />
     <ClCompile Include="..\deps\heatmap\colorschemes\Reds.c" />
+    <ClCompile Include="..\deps\heatmap\colorschemes\Spectral.c" />
     <ClCompile Include="..\deps\heatmap\examples\lodepng.cpp" />
     <ClCompile Include="..\deps\heatmap\heatmap.c" />
     <ClCompile Include="..\src\HeatmapManager.cpp" />
