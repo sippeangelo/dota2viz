@@ -54,36 +54,23 @@ int main(int argc, char **argv) {
 
 		for (int i = 0; i < alice.countPlayers(); i++) {
 			auto player = alice.getPlayer(i);
+			auto hero = player->getHero();
 
-			int lifeState = player->getHero()->getLifeState();
+			int lifeState = hero->getLifeState();
+			//if (lifeState == STATE_ALIVE && (lifeTracker.find(i) == lifeTracker.end() || lifeTracker[i] != STATE_ALIVE)) {
 			if (lifeState == STATE_DEAD && lifeTracker[i] != STATE_DEAD) {
-				std::cout << player->getName() << " died! Oh noes! " << std::endl;
-				deaths++;
+				int cellwidth = 1 << hero->getCellbits();
+				int cellX = hero->getCellX();
+				int cellY = hero->getCellY();
+				auto vecOrigin = hero->getOrigin();
+				int x = (cellX * cellwidth - 16384) + vecOrigin[0];
+				int y = (cellY * cellwidth - 16384) + vecOrigin[1];
+
+				std::cout << x << ";" << y << ";" << player->getTeam() << ";" << game->getTime() - game->getTimeGamestart() << std::endl;
 			}
 			lifeTracker[i] = lifeState;
 		}
 	}
-
-	std::cout << "Total deaths: " << deaths << std::endl;
-
-	return 0;
-
-	std::cout << "Waiting for players..." << std::endl;
-	while (alice.parse()) {
-		int playerCount = alice.countPlayers();
-		std::cout << "Player count: " << playerCount << std::endl;
-
-		if (playerCount > 0) {
-			for (int i = 0; i < playerCount; i++) {
-				auto player = alice.getPlayer(i);
-				std::cout << player->getName() << std::endl;
-			}
-			std::cin.get();
-		}
-	}
-
-
-	//std::cout << "Connected players: " << game->getConnectedPlayers() << std::endl;
 
 	return 0;
 }
