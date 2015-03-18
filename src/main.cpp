@@ -102,18 +102,20 @@ int parse(boost::filesystem::path filePath)
 }
 
 int main(int argc, char **argv) {
-	
 	////////////////////////////////////////////////////////////
 	// Heatmap stuff 
 	////////////////////////////////////////////////////////////
 	HeatmapManager hmm;
 	//hmm.ReadData();
-	hmm.CreateHeatmap("../../replays/");
+	hmm.CreateHeatmap(argv[1]);
 	//hmm.CreateImage();
 	////////////////////////////////////////////////////////////
 	// Heatmap not stuff
 	////////////////////////////////////////////////////////////
-	
+
+	return 0;
+
+
 	if (argc != 2) {
 		std::cerr << "Usage: dota2viz <path>" << std::endl;
 		return 1;

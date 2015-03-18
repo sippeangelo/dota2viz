@@ -14,7 +14,7 @@
 class HeatmapManager
 {
 public:
-	void CreateHeatmap(std::string path);
+	void CreateHeatmap(std::string path, int timestep = -1);
 	void CreateImage(int counter);
 private:
 	std::vector<Data> data;

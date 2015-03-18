@@ -26,7 +26,7 @@ heatmap_t* hm2 = heatmap_new(w, h);
 
 
 // Add the data points to the heatmap
-void HeatmapManager::CreateHeatmap(std::string path)
+void HeatmapManager::CreateHeatmap(std::string path, int timestep = -1)
 {
 	//int npoints = data.size();
 
@@ -60,7 +60,12 @@ void HeatmapManager::CreateHeatmap(std::string path)
 		std::cerr << "Path is not a directory" << std::endl;
 		//return 1;
 	}
-	
+
+	boost::filesystem::create_directory("red");
+	boost::filesystem::create_directory("blue");
+
+	std::vector<std::shared_ptr<std::ifstream>> files;
+
 	for (boost::filesystem::directory_iterator it(dir), end; it != end; it++) {
 		auto path = it->path();
 
@@ -69,27 +74,30 @@ void HeatmapManager::CreateHeatmap(std::string path)
 			continue;
 		}
 
-		std::ifstream file(path.c_str());
-		std::string s_data;
+		files.push_back(std::make_shared<std::ifstream>(path.c_str()));
+	}
+	
+	int counter = 0;
+	while (files.size() > 0) {
+		auto it = files.begin();
+		while (it != files.end()) {
+			auto file = *it;
 
-		int counter = 0;
-		while (file.good())
-		{
-			counter++;
-			//std::cout << "Reading CSV " << path << std::endl;
-			getline(file, s_data, ';');
+			std::string s_data;
+
+			getline(*file, s_data, ';');
 			int x1 = std::atof(s_data.c_str());
 
-			getline(file, s_data, ';');
+			getline(*file, s_data, ';');
 			int y1 = std::atof(s_data.c_str());
 
 			int x = (8192 + x1) * ((float)w / 16384.f);
 			int y = (8192 - y1) * ((float)h / 16384.f);
 
-			getline(file, s_data, ';');
+			getline(*file, s_data, ';');
 			int team = std::atof(s_data.c_str());
 
-			getline(file, s_data, '\n');
+			getline(*file, s_data, '\n');
 			double time = std::atof(s_data.c_str());
 
 			//create heightmap
@@ -100,13 +108,75 @@ void HeatmapManager::CreateHeatmap(std::string path)
 				//heatmap_add_point(hm2, x, y);
 				heatmap_add_point_with_stamp(hm2, x, y, stamp);
 
-			if (counter%10 == 0)
-			{
+			if (!file->good()) {
+				file->close();
+				it = files.erase(it);
+			} else {
+				it++;
+			}
+		}
+
+		if (timestep > -1) {
+			if (counter % timestep == 0) {
 				CreateImage(counter);
 			}
 		}
-		file.close();
+
+		counter++;
 	}
+
+	if (timestep == -1) {
+		CreateImage(counter);
+	}
+
+	//for (boost::filesystem::directory_iterator it(dir), end; it != end; it++) {
+	//	auto path = it->path();
+
+	//	if (path.extension() != ".csv") {
+	//		std::cout << "Skipping " << path << ": Not a csv file" << std::endl;
+	//		continue;
+	//	}
+
+	//	std::ifstream file(path.c_str());
+	//	std::string s_data;
+
+	//	int counter = 0;
+	//	while (file.good())
+	//	{
+	//		counter++;
+	//		//std::cout << "Reading CSV " << path << std::endl;
+	//		getline(file, s_data, ';');
+	//		int x1 = std::atof(s_data.c_str());
+
+	//		getline(file, s_data, ';');
+	//		int y1 = std::atof(s_data.c_str());
+
+	//		int x = (8192 + x1) * ((float)w / 16384.f);
+	//		int y = (8192 - y1) * ((float)h / 16384.f);
+
+	//		getline(file, s_data, ';');
+	//		int team = std::atof(s_data.c_str());
+
+	//		getline(file, s_data, '\n');
+	//		double time = std::atof(s_data.c_str());
+
+	//		//create heightmap
+	//		if (team == 2) //radiant
+	//			//heatmap_add_point(hm, x, y);
+	//			heatmap_add_point_with_stamp(hm, x, y, stamp);
+	//		else if (team == 3)
+	//			//heatmap_add_point(hm2, x, y);
+	//			heatmap_add_point_with_stamp(hm2, x, y, stamp);
+
+	//		if (counter % 10 == 0)
+	//		{
+	//			CreateImage(counter);
+	//		}
+	//	}
+	//	file.close();
+	//}
+
+
 
 	heatmap_free(hm);
 	heatmap_free(hm2);
@@ -134,7 +204,6 @@ void HeatmapManager::CreateImage(int counter)
 // 	heatmap_free(hm2);
 
 	// Finally, we use the fantastic lodepng library to save it as an image.
-
 
 	{
 		std::stringstream ss;
