@@ -26,7 +26,7 @@ heatmap_t* hm2 = heatmap_new(w, h);
 
 
 // Add the data points to the heatmap
-void HeatmapManager::CreateHeatmap(std::string path, int timestep = -1)
+void HeatmapManager::CreateHeatmap(std::string path, int timestep /*= -1*/)
 {
 	//int npoints = data.size();
 
@@ -61,8 +61,21 @@ void HeatmapManager::CreateHeatmap(std::string path, int timestep = -1)
 		//return 1;
 	}
 
-	boost::filesystem::create_directory("red");
-	boost::filesystem::create_directory("blue");
+	boost::filesystem::path out_red = dir;
+	boost::filesystem::path out_blue = dir;
+
+	if (timestep == -1) {
+		out_red /= "red";
+		out_blue /= "blue";
+	} else {
+		std::stringstream ss;
+		ss << timestep;
+		out_red /= "red-" + ss.str();
+		out_blue /= "blue-" + ss.str();
+	}
+
+	boost::filesystem::create_directory(out_red);
+	boost::filesystem::create_directory(out_blue);
 
 	std::vector<std::shared_ptr<std::ifstream>> files;
 
@@ -77,6 +90,7 @@ void HeatmapManager::CreateHeatmap(std::string path, int timestep = -1)
 		files.push_back(std::make_shared<std::ifstream>(path.c_str()));
 	}
 	
+	int frameIndex = 0;
 	int counter = 0;
 	while (files.size() > 0) {
 		auto it = files.begin();
@@ -118,7 +132,8 @@ void HeatmapManager::CreateHeatmap(std::string path, int timestep = -1)
 
 		if (timestep > -1) {
 			if (counter % timestep == 0) {
-				CreateImage(counter);
+				CreateImage(frameIndex, out_red, out_blue);
+				frameIndex++;
 			}
 		}
 
@@ -126,7 +141,7 @@ void HeatmapManager::CreateHeatmap(std::string path, int timestep = -1)
 	}
 
 	if (timestep == -1) {
-		CreateImage(counter);
+		CreateImage(counter, out_red, out_blue);
 	}
 
 	//for (boost::filesystem::directory_iterator it(dir), end; it != end; it++) {
@@ -187,7 +202,7 @@ void HeatmapManager::CreateHeatmap(std::string path, int timestep = -1)
 
 // This creates an image out of the heatmap.
 // `image` now contains the image data in 32-bit RGBA.
-void HeatmapManager::CreateImage(int counter)
+void HeatmapManager::CreateImage(int counter, boost::filesystem::path out_red, boost::filesystem::path out_blue)
 {
 	int scale2 = 10;
 	std::vector<unsigned char> image((w*scale2)*(h * scale2) * 4);
@@ -207,17 +222,18 @@ void HeatmapManager::CreateImage(int counter)
 
 	{
 		std::stringstream ss;
-		ss << "blue/heatmap" << counter << "b.png";
-		if (unsigned error = lodepng::encode(ss.str(), image, w, h)) {
+		ss << "heatmap" << counter << ".png";
+		out_blue /= ss.str();
+		if (unsigned error = lodepng::encode(out_blue.string(), image, w, h)) {
 			std::cerr << "encoder error " << error << ": " << lodepng_error_text(error) << std::endl;
-
 		}
 	}
 
 	{
 		std::stringstream ss;
-		ss << "red/heatmap" << counter << "r.png";
-		if (unsigned error = lodepng::encode(ss.str(), image2, w, h)) {
+		ss << "heatmap" << counter << ".png";
+		out_red /= ss.str();
+		if (unsigned error = lodepng::encode(out_red.string(), image2, w, h)) {
 			std::cerr << "encoder error " << error << ": " << lodepng_error_text(error) << std::endl;
 
 		}

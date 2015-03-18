@@ -10,9 +10,12 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\parse\main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B330B7E4-06D7-4F89-8AFE-FD821811B59A}</ProjectGuid>
-    <RootNamespace>dota2viz</RootNamespace>
+    <ProjectGuid>{E51883A3-9F2D-4004-BBC7-550D9D81F7F9}</ProjectGuid>
+    <RootNamespace>dota2parse</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -39,13 +42,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>$(SolutionDir)..\deps\Alice\deps\protobuf-2.5.0\lib\$(Configuration)\;$(SolutionDir)..\deps\Alice\lib\$(Configuration)\;$(BOOST_1_55_0_ROOT)\lib32-msvc-12.0;$(LibraryPath)</LibraryPath>
     <IncludePath>$(BOOST_1_55_0_ROOT);$(SolutionDir)..\deps\Alice\deps\protobuf-2.5.0\src;$(SolutionDir)..\deps\Alice\src\;$(SolutionDir)..\deps\Alice-Simple\src;$(SolutionDir)..\deps\heatmap\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\deps\Alice\deps\protobuf-2.5.0\lib\$(Configuration)\;$(SolutionDir)..\deps\Alice\lib\$(Configuration)\;$(BOOST_1_55_0_ROOT)\lib32-msvc-12.0;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)..\bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LibraryPath>$(SolutionDir)..\deps\Alice\deps\protobuf-2.5.0\lib\$(Configuration)\;$(SolutionDir)..\deps\Alice\lib\$(Configuration)\;$(BOOST_1_55_0_ROOT)\lib32-msvc-12.0;$(LibraryPath)</LibraryPath>
     <IncludePath>$(BOOST_1_55_0_ROOT);$(SolutionDir)..\deps\Alice\deps\protobuf-2.5.0\src;$(SolutionDir)..\deps\Alice\src\;$(SolutionDir)..\deps\Alice-Simple\src;$(SolutionDir)..\deps\heatmap\;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)..\deps\Alice\deps\protobuf-2.5.0\lib\$(Configuration)\;$(SolutionDir)..\deps\Alice\lib\$(Configuration)\;$(BOOST_1_55_0_ROOT)\lib32-msvc-12.0;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)..\bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -58,7 +61,6 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libprotobuf.lib;alice-core-static.lib;alice-addon-static.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -75,27 +77,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>libprotobuf.lib;alice-core-static.lib;alice-addon-static.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\deps\heatmap\colorschemes\Blues.c" />
-    <ClCompile Include="..\deps\heatmap\colorschemes\Reds.c" />
-    <ClCompile Include="..\deps\heatmap\colorschemes\Spectral.c" />
-    <ClCompile Include="..\deps\heatmap\examples\lodepng.cpp" />
-    <ClCompile Include="..\deps\heatmap\heatmap.c" />
-    <ClCompile Include="..\deps\Alice\example\example.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\src\viz\HeatmapManager.cpp" />
-    <ClCompile Include="..\src\viz\main.cpp" />
-    <ClCompile Include="..\src\viz\ReadCSV.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\src\viz\HeatmapManager.h" />
-    <ClInclude Include="..\src\viz\ReadCSV.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
